@@ -61,26 +61,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AltoroMutualTests.cs" />
+    <Compile Include="PageObjects\BasePage.cs" />
+    <Compile Include="PageObjects\CreateAccountPage.cs" />
     <Compile Include="PageObjects\LoginPage.cs" />
     <Compile Include="PageObjects\MainPage.cs" />
-    <Compile Include="PageObjects\RequestGoldVisaPage.cs" />
+    <Compile Include="PageObjects\MyAccountPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeleniumHelpers\SeleniumHelper.cs" />
+    <Compile Include="TestCases\BaseTest.cs" />
+    <Compile Include="TestCases\MainScenarios.cs" />
     <Compile Include="Utilities\ConfigurationHelper.cs" />
+    <Compile Include="Utilities\FileUtil.cs" />
     <Compile Include="Utilities\Guard.cs" />
     <Compile Include="SeleniumHelpers\DriverFactory.cs" />
     <Compile Include="SeleniumHelpers\ExtendedRemoteWebDriver.cs" />
     <Compile Include="SeleniumHelpers\SeleniumUtils.cs" />
     <Compile Include="SeleniumHelpers\WebDriverExtensions.cs" />
+    <Compile Include="Utilities\WebElementExtender.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="chromedriver.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="IEDriverServer.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="products.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

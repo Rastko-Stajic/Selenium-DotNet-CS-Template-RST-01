@@ -65,5 +65,50 @@ namespace Structura.GuiTests.SeleniumHelpers
 
             return result;
         }
+
+        public static bool IsElementDisplayed(IWebDriver driver, By selector)
+        {
+            try
+            {
+                return IsElementDisplayed(driver.FindElement(selector));
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
+
+        public static bool IsElementDisplayed(IWebElement element)
+        {
+            bool isDisplayed = false;
+            try
+            {
+                isDisplayed = element.Displayed;
+            }
+            catch (NoSuchElementException)
+            {
+                isDisplayed = false;
+            }
+
+            return isDisplayed;
+        }
+
+        public static bool IsElementEnabled(IWebElement element)
+        {
+            bool isActive = false;
+            if (IsElementDisplayed(element))
+            {
+                try
+                {
+                    isActive = element.Enabled;
+                }
+                catch (NoSuchElementException)
+                {
+                    isActive = false;
+                }
+            }
+
+            return isActive;
+        }
     }
 }

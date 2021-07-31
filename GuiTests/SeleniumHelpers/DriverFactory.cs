@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Configuration;
 using System.Diagnostics;
+using System.IO;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Remote;
 using Structura.GuiTests.Utilities;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Structura.GuiTests.SeleniumHelpers
 {
@@ -45,7 +47,7 @@ namespace Structura.GuiTests.SeleniumHelpers
                     driver.Manage().Window.Maximize();
                     break;
                 case DriverToUse.Chrome:
-                    driver = new ChromeDriver();
+                    driver = new ChromeDriver(AppDomain.CurrentDomain.BaseDirectory);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

@@ -1,61 +1,53 @@
 ﻿using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
+using OpenQA.Selenium.Support.UI;
+using Structura.GuiTests.PageObjects;
 using Tests.SeleniumHelpers;
 
 namespace Tests.PageObjects
 {
-    public class LoginPage
+    public class LoginPage : BasePage
     {
-        private readonly IWebDriver _driver;
-
-        public LoginPage(IWebDriver driver)
+        public static string Title
         {
-            _driver = driver;
-            PageFactory.InitElements(_driver, this);
+            get
+            {
+                return "Login - My Store";
+            }
         }
 
-        [FindsBy(How = How.Id, Using = "AccountLink")]
-        public IWebElement SignInLink { get; set; }
+        public LoginPage(IWebDriver driver) : base(driver) { }
 
-        [FindsBy(How = How.Id, Using = "uid")]
-        public IWebElement UserIdField { get; set; }
+        [FindsBy(How = How.Id, Using = "email_create")]
+        public IWebElement CreateEmailInput { get; set; }
 
-        [FindsBy(How = How.Id, Using = "passw")]
-        public IWebElement PasswordField { get; set; }
+        [FindsBy(How = How.Id, Using = "email")]
+        public IWebElement LoginEmail { get; set; }
 
+        [FindsBy(How = How.Id, Using = "passwd")]
+        public IWebElement LoginPassword { get; set; }
 
-        /// <summary>
-        /// JQuery selector example
-        /// </summary>
-        public IWebElement LoginButton => _driver.FindElementByJQuery("input[name='btnSubmit']");
+        [FindsBy(How = How.Id, Using = "SubmitLogin")]
+        public IWebElement LoginButton { get; set; }
 
-        public void LoginAsAdmin(string baseUrl)
+        [FindsBy(How = How.Id, Using = "SubmitCreate")]
+        public IWebElement CreateAccountButton { get; set; }
+
+        public CreateAccountPage CreateAccout()
         {
-            _driver.Navigate().GoToUrl(baseUrl);
-            SignInLink.Click();
-            UserIdField.Clear();
-            // sending a single quote is not possible with the Chrome Driver, it sends two single quotes!
-            UserIdField.SendKeys("admin'--");
+            this.CreateAccountButton.Click();
+            WebDriverExtensions.WaitUntilElementExists(driver, By.Id("submitAccount"));
 
-            PasswordField.Clear();
-            PasswordField.SendKeys("blah");
+            CreateAccountPage createAccountPage = new CreateAccountPage(driver);
 
-            LoginButton.Click();
-        }
+            if (!createAccountPage.PageHeading.Text.Equals(CreateAccountPage.Heading))
+            {
+                Thread.Sleep(3);
+                createAccountPage = new CreateAccountPage(driver);
+            }
 
-        public void LoginAsNobody(string baseUrl)
-        {
-            _driver.Navigate().GoToUrl(baseUrl);
-            SignInLink.Click();
-
-            UserIdField.Clear();
-            UserIdField.SendKeys("nobody");
-
-            PasswordField.Clear();
-            PasswordField.SendKeys("blah");
-
-            LoginButton.Click();
+            return createAccountPage;
         }
     }
 }
